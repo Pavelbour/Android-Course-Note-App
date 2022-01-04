@@ -6,4 +6,6 @@ public interface NoteRepository {
     List<NoteEntity> getNotes();
 
     void deleteNote(NoteEntity note);
+    void addNote(NoteEntity note);
+    int getRepositorySize();
 }

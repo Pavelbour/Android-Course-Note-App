@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener{
     private NoteRepository noteRepository;
     private RecyclerView recyclerView;
     private NoteAdapter adapter;
+    private Button addNewNoteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener{
         setContentView(R.layout.activity_main);
 
         noteRepository = App.get(this).getNoteRepository();
+
+        addNewNoteButton = findViewById(R.id.add_new_note_button);
+        addNewNoteButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddNewNoteActivity.class);
+            startActivityForResult(intent, NOTE_REQUEST_CODE);
+        });
 
         initRecycler();
     }
@@ -54,14 +62,13 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener{
         intent.putExtra(NoteActivity.NOTE_EXTRA_KEY, noteEntity);
         Toast.makeText(this, noteEntity.getTitle(), Toast.LENGTH_SHORT);
         startActivity(intent);
-//        startActivityForResult(intent, NOTE_REQUEST_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NOTE_REQUEST_CODE && requestCode == RESULT_OK) {
+        if (requestCode == NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
             adapter.setData(noteRepository.getNotes());
         }
     }

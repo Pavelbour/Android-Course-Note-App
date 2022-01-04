@@ -28,6 +28,16 @@ public class CacheNoteRepository implements NoteRepository {
     }
 
     @Override
+    public void addNote(NoteEntity note) {
+        cache.add(note);
+    }
+
+    @Override
+    public int getRepositorySize() {
+        return cache.size();
+    }
+
+    @Override
     public void deleteNote(NoteEntity note) {
         try {
             cache.remove(findPosition(note));
