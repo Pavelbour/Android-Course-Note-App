@@ -16,14 +16,20 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     private final TextView contentTextView = itemView.findViewById(R.id.note_content_text_view);
     private final TextView dateTextView = itemView.findViewById(R.id.note_date_text_view);
 
+    private OnNoteListener onNoteListener;
+
     public NoteViewHolder (
             @NonNull LayoutInflater inflater,
-            @NonNull ViewGroup parent
+            @NonNull ViewGroup parent,
+            OnNoteListener onNoteListener
             ) {
         super(inflater.inflate(R.layout.item_note, parent, false));
+        this.onNoteListener = onNoteListener;
     }
 
     public void bind(NoteEntity note) {
+        itemView.setOnClickListener(v -> onNoteListener.onClickNote(note));
+
         titleTextView.setText(note.getTitle());
         contentTextView.setText(note.getNote());
         dateTextView.setText(note.getDate());

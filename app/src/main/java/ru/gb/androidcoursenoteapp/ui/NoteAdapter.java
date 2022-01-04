@@ -14,16 +14,21 @@ import ru.gb.androidcoursenoteapp.domain.NoteEntity;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     private List<NoteEntity> data = new ArrayList<>();
+    private OnNoteListener onNoteListener;
 
     public void setData(List<NoteEntity> noteList) {
         data = noteList;
+    }
+
+    public void setOnNoteListener(OnNoteListener onNoteListener) {
+        this.onNoteListener = onNoteListener;
     }
 
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        return new NoteViewHolder(inflater, parent);
+        return new NoteViewHolder(inflater, parent, onNoteListener);
     }
 
     @Override
