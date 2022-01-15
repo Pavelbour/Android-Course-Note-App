@@ -18,6 +18,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     public void setData(List<NoteEntity> noteList) {
         data = noteList;
+        notifyDataSetChanged();
     }
 
     public void setOnNoteListener(OnNoteListener onNoteListener) {
@@ -38,6 +39,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     private NoteEntity getItem(int position) {
         return data.get(position);
+    }
+
+    public void editItem(NoteEntity noteEntity) {
+        int index = data.indexOf(noteEntity);
+        data.set(index, noteEntity);
+        notifyItemChanged(index);
     }
 
     public void deleteItem(NoteEntity noteEntity) {

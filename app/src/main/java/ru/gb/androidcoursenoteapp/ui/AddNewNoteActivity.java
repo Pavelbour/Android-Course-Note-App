@@ -33,7 +33,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
             String content = contentEditText.getText().toString();
             String date = dateEditText.getText().toString();
 
-            NoteEntity note = new NoteEntity(noteRepository.getRepositorySize(), title, content, date);
+            NoteEntity note = new NoteEntity(noteRepository.getRepositorySize() + 1, title, content, date);
             noteRepository.addNote(note);
             setResult(RESULT_OK);
             finish();
