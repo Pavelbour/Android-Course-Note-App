@@ -3,9 +3,11 @@ package ru.gb.androidcoursenoteapp.ui;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.gb.androidcoursenoteapp.R;
@@ -15,6 +17,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     private final TextView titleTextView = itemView.findViewById(R.id.note_title_text_view);
     private final TextView contentTextView = itemView.findViewById(R.id.note_content_text_view);
     private final TextView dateTextView = itemView.findViewById(R.id.note_date_text_view);
+    private final AppCompatImageView deleteImageView = itemView.findViewById(R.id.item_note__delete_image_view);
 
     private OnNoteListener onNoteListener;
 
@@ -29,6 +32,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(NoteEntity note) {
         itemView.setOnClickListener(v -> onNoteListener.onClickNote(note));
+        deleteImageView.setOnClickListener(v -> onNoteListener.onDeleteNote(note));
 
         titleTextView.setText(note.getTitle());
         contentTextView.setText(note.getNote());

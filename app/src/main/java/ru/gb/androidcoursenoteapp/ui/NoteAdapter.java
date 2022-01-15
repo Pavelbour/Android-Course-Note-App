@@ -40,6 +40,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         return data.get(position);
     }
 
+    public void deleteItem(NoteEntity noteEntity) {
+        int index = data.indexOf(noteEntity);
+        data.remove(index);
+        notifyItemRemoved(index);
+    }
+
     @Override
     public int getItemCount() {
         return data.size();

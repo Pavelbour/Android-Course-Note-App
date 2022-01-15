@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener{
     }
 
     @Override
+    public void onDeleteNote(NoteEntity noteEntity) {
+        noteRepository.deleteNote(noteEntity);
+        adapter.deleteItem(noteEntity);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
