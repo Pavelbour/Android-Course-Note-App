@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/note_title_text_view"
+            android:id="@+id/activity_note__note_title_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -22,16 +22,32 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/note_content_text_view"
+            android:id="@+id/activity_note__note_content_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/note_date_text_view"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textStyle="italic" />
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+
+            <TextView
+                android:id="@+id/activity_note__note_date_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textStyle="italic" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/item_note__delete_image_view"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_baseline_delete_24"/>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1,7 +1,6 @@
 package ru.gb.androidcoursenoteapp.data;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import ru.gb.androidcoursenoteapp.domain.NoteEntity;
@@ -30,6 +29,11 @@ public class CacheNoteRepository implements NoteRepository {
     @Override
     public void addNote(NoteEntity note) {
         cache.add(note);
+    }
+
+    @Override
+    public void editNote(NoteEntity note) {
+        cache.set(findPosition(note), note);
     }
 
     @Override

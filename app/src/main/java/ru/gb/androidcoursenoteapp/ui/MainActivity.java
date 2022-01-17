@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -61,7 +62,13 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener{
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtra(NoteActivity.NOTE_EXTRA_KEY, noteEntity);
         Toast.makeText(this, noteEntity.getTitle(), Toast.LENGTH_SHORT);
-        startActivity(intent);
+        startActivityForResult(intent, NOTE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onDeleteNote(NoteEntity noteEntity) {
+        noteRepository.deleteNote(noteEntity);
+        adapter.deleteItem(noteEntity);
     }
 
     @Override
