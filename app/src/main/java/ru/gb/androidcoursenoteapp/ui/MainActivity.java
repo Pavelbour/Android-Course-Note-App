@@ -2,81 +2,64 @@ package ru.gb.androidcoursenoteapp.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import ru.gb.androidcoursenoteapp.App;
 import ru.gb.androidcoursenoteapp.R;
-import ru.gb.androidcoursenoteapp.data.CacheNoteRepository;
 import ru.gb.androidcoursenoteapp.domain.NoteEntity;
-import ru.gb.androidcoursenoteapp.domain.NoteRepository;
-import ru.gb.androidcoursenoteapp.ui.NoteAdapter;
+import ru.gb.androidcoursenoteapp.ui.list.NotesListFragment;
+import ru.gb.androidcoursenoteapp.ui.new_note.NewNoteFragment;
+import ru.gb.androidcoursenoteapp.ui.note.NoteFragment;
 
-public class MainActivity extends AppCompatActivity implements OnNoteListener{
-    private static final int NOTE_REQUEST_CODE = 42;
-
-    private NoteRepository noteRepository;
-    private RecyclerView recyclerView;
-    private NoteAdapter adapter;
-    private Button addNewNoteButton;
+public class MainActivity extends AppCompatActivity implements Controller {
+    private static final String TAG_LIST_FRAGMENT = "TAG_LIST_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        noteRepository = App.get(this).getNoteRepository();
-
-        addNewNoteButton = findViewById(R.id.add_new_note_button);
-        addNewNoteButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddNewNoteActivity.class);
-            startActivityForResult(intent, NOTE_REQUEST_CODE);
-        });
-
-        initRecycler();
-    }
-
-    private void initRecycler() {
-        recyclerView = findViewById(R.id.main_activity_recycler_view);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter = new NoteAdapter();
-        adapter.setData(noteRepository.getNotes());
-        adapter.setOnNoteListener(this);
-
-        recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onClickNote(NoteEntity noteEntity) {
-        Intent intent = new Intent(this, NoteActivity.class);
-        intent.putExtra(NoteActivity.NOTE_EXTRA_KEY, noteEntity);
-        Toast.makeText(this, noteEntity.getTitle(), Toast.LENGTH_SHORT);
-        startActivityForResult(intent, NOTE_REQUEST_CODE);
-    }
-
-    @Override
-    public void onDeleteNote(NoteEntity noteEntity) {
-        noteRepository.deleteNote(noteEntity);
-        adapter.deleteItem(noteEntity);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
-            adapter.setData(noteRepository.getNotes());
+        if (savedInstanceState == null) {
+            Fragment notesListFragment = new NotesListFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.activity_main__fragment_container, notesListFragment, TAG_LIST_FRAGMENT)
+                    .commit();
         }
+    }
+
+    @Override
+    public void onAddNote() {
+        getSupportFragmentManager().popBackStack();
+        NotesListFragment fragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
+        fragment.refreshList();
+    }
+
+    @Override
+    public void onEditNote(NoteEntity noteEntity) {
+        getSupportFragmentManager().popBackStack();
+        NotesListFragment fragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
+        fragment.onEditNote(noteEntity);
+    }
+
+    @Override
+    public void showNewNoteFragment() {
+        Fragment newNoteFragment = new NewNoteFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activity_main__fragment_container, newNoteFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void showNoteFragment(NoteEntity noteEntity) {
+        Fragment noteFragment = NoteFragment.newInstance(noteEntity);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activity_main__fragment_container, noteFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

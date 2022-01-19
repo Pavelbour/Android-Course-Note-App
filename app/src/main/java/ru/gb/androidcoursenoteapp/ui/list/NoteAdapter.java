@@ -1,4 +1,4 @@
-package ru.gb.androidcoursenoteapp.ui;
+package ru.gb.androidcoursenoteapp.ui.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
