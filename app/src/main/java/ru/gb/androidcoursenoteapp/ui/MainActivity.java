@@ -3,7 +3,12 @@ package ru.gb.androidcoursenoteapp.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.gb.androidcoursenoteapp.R;
 import ru.gb.androidcoursenoteapp.domain.NoteEntity;
@@ -33,6 +38,16 @@ public class MainActivity extends AppCompatActivity implements Controller {
         getSupportFragmentManager().popBackStack();
         NotesListFragment fragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
         fragment.refreshList();
+
+        final Snackbar snackbar = Snackbar.make(fragment.getView(), "A new note added successfully", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setTextColor(Color.GREEN);
+        snackbar.setActionTextColor(Color.RED);
+        snackbar.setBackgroundTint(Color.BLACK);
+        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
+        snackbar.setAction("Close", snackView -> {
+            snackbar.dismiss();
+        });
+        snackbar.show();
     }
 
     @Override
@@ -40,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements Controller {
         getSupportFragmentManager().popBackStack();
         NotesListFragment fragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
         fragment.onEditNote(noteEntity);
+
+        Toast.makeText(this, "The changes saved.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
