@@ -1,6 +1,5 @@
 package ru.gb.androidcoursenoteapp.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements Controller {
             Fragment notesListFragment = new NotesListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.activity_main__fragment_container, notesListFragment, TAG_LIST_FRAGMENT)
+                    .add(R.id.activity_main__main_fragment_container, notesListFragment, TAG_LIST_FRAGMENT)
                     .commit();
         }
     }
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements Controller {
         Fragment newNoteFragment = new NewNoteFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.activity_main__fragment_container, newNoteFragment)
+                .replace(R.id.activity_main__second_fragment_container, newNoteFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements Controller {
         Fragment noteFragment = NoteFragment.newInstance(noteEntity);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.activity_main__fragment_container, noteFragment)
+                .replace(R.id.activity_main__second_fragment_container, noteFragment)
                 .addToBackStack(null)
                 .commit();
     }
