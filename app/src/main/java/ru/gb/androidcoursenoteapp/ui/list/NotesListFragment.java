@@ -1,6 +1,8 @@
 package ru.gb.androidcoursenoteapp.ui.list;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.gb.androidcoursenoteapp.App;
 import ru.gb.androidcoursenoteapp.R;
@@ -78,15 +81,34 @@ public class NotesListFragment extends Fragment implements OnNoteListener {
 
     @Override
     public void onDeleteNote(NoteEntity noteEntity) {
-        noteRepository.deleteNote(noteEntity);
-        adapter.deleteItem(noteEntity);
+        new AlertDialog.Builder(getContext())
+                .setTitle("Delete note")
+                .setMessage("Are you sure you want to delete this note?")
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    noteRepository.deleteNote(noteEntity);
+                    adapter.deleteItem(noteEntity);
+
+                    final Snackbar snackbar = Snackbar.make(getView(), "The note " + noteEntity.getTitle() + "deleted.", Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setTextColor(Color.RED);
+                    snackbar.setActionTextColor(Color.RED);
+                    snackbar.setBackgroundTint(Color.BLACK);
+                    snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
+                    snackbar.setAction("Close", snackView -> {
+                        snackbar.dismiss();
+                    });
+                    snackbar.show();
+                })
+                .setNegativeButton("No", (dialog, id) -> {
+                    // pass
+                })
+                .show();
     }
 
     public void onEditNote(NoteEntity noteEntity) {
         adapter.editItem(noteEntity);
     }
 
-    public void refreshList () {
+    public void refreshList() {
         adapter.setData(noteRepository.getNotes());
     }
 }
