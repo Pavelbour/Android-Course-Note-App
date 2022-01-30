@@ -60,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements Controller {
     }
 
     @Override
+    public void onDeleteNote(NoteEntity noteEntity) {
+        getSupportFragmentManager().popBackStack();
+        NotesListFragment fragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
+        fragment.onDeleteNote(noteEntity);
+    }
+
+    @Override
     public void showNewNoteFragment() {
         Fragment newNoteFragment = new NewNoteFragment();
         getSupportFragmentManager()

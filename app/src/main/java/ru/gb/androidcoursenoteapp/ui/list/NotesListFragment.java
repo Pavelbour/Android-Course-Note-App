@@ -5,12 +5,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,11 +60,25 @@ public class NotesListFragment extends Fragment implements OnNoteListener {
         noteRepository = App.get().getNoteRepository();
         addNewNoteButton = view.findViewById(R.id.fragment_notes_list__add_new_note_button);
 
+        final Toolbar toolbar = view.findViewById(R.id.fragment_notes_list__first_toolbar);
+        final MenuInflater menuInflater = getActivity().getMenuInflater();
+        final Menu menu = toolbar.getMenu();
+        menuInflater.inflate(R.menu.first_menu, menu);
+        menu.findItem(R.id.first_menu__add_new_note).setOnMenuItemClickListener(this::onOptionsItemSelected);
+
         initRecycler(view);
 
         addNewNoteButton.setOnClickListener(v -> {
             controller.showNewNoteFragment();
         });
+
+        ((AppCompatActivity) requireActivity()).setActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        controller.showNewNoteFragment();
+        return true;
     }
 
     private void initRecycler(View view) {

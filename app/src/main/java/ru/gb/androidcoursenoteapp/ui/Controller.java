@@ -7,4 +7,5 @@ public interface Controller {
     void showNewNoteFragment();
     void onAddNote();
     void onEditNote(NoteEntity noteEntity);
+    void onDeleteNote(NoteEntity noteEntity);
 }

@@ -3,13 +3,18 @@ package ru.gb.androidcoursenoteapp.ui.note;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import ru.gb.androidcoursenoteapp.App;
@@ -62,6 +67,12 @@ public class NoteFragment extends Fragment {
         noteEntity = getArguments().getParcelable(NOTE_ARG_KEY);
         noteRepository = App.get().getNoteRepository();
 
+        final Toolbar toolbar = view.findViewById(R.id.item_note__second_toolbar);
+        final MenuInflater menuInflater = getActivity().getMenuInflater();
+        final Menu menu = toolbar.getMenu();
+        menuInflater.inflate(R.menu.second_menu, menu);
+        menu.findItem(R.id.second_menu__delete_note).setOnMenuItemClickListener(this::onOptionsItemSelected);
+
         titleTextView = view.findViewById(R.id.item_note__note_title_edit_text);
         contentTextView = view.findViewById(R.id.item_note__note_content_edit_text);
         dateTextView = view.findViewById(R.id.item_note__note_date_edit_text);
@@ -80,5 +91,13 @@ public class NoteFragment extends Fragment {
 
             controller.onEditNote(noteEntity);
         });
+
+        ((AppCompatActivity) requireActivity()).setActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        controller.onDeleteNote(noteEntity);
+        return true;
     }
 }
