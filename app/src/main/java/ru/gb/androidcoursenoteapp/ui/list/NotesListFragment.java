@@ -128,6 +128,7 @@ public class NotesListFragment extends Fragment implements OnNoteListener {
     }
 
     public void refreshList() {
+        noteRepository.getNotes();
         adapter.setData(noteRepository.getNotes());
     }
 }

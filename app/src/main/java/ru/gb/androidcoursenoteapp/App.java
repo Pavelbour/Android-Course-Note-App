@@ -4,11 +4,13 @@ import android.app.Application;
 import android.content.Context;
 
 import ru.gb.androidcoursenoteapp.data.CacheNoteRepository;
+import ru.gb.androidcoursenoteapp.data.SnappyDBNoteRepository;
 import ru.gb.androidcoursenoteapp.domain.NoteRepository;
 
 public class App extends Application {
     private static App sInstance = null;
-    private final NoteRepository noteRepository = new CacheNoteRepository();
+//    private final NoteRepository noteRepository = new CacheNoteRepository();
+    private final NoteRepository noteRepository = new SnappyDBNoteRepository(this);
 
     @Override
     public void onCreate() {
