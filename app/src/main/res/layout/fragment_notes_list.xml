@@ -7,6 +7,12 @@
     android:gravity="center_horizontal"
     tools:context=".ui.MainActivity">
 
+    <Toolbar
+        android:id="@+id/fragment_notes_list__first_toolbar"
+        android:background="@color/design_default_color_primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/fragment_notes_list__add_new_note_button"
         android:layout_width="wrap_content"
