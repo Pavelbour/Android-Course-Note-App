@@ -6,4 +6,9 @@
         android:id="@+id/second_menu__delete_note"
         android:title="Delete note"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/second_menu__app_stats"
+        android:title="App stats"
+        app:showAsAction="never"/>
 </menu>

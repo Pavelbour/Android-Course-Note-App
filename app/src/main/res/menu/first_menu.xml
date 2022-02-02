@@ -6,4 +6,9 @@
         android:id="@+id/first_menu__add_new_note"
         android:title="Add a new note"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/first_menu__app_stats"
+        android:title="App stats"
+        app:showAsAction="never"/>
 </menu>
