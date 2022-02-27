@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ru.gb.androidcoursenoteapp.R;
 import ru.gb.androidcoursenoteapp.domain.NoteEntity;
+import ru.gb.androidcoursenoteapp.ui.launch_stats.LaunchStatsFragment;
 import ru.gb.androidcoursenoteapp.ui.list.NotesListFragment;
 import ru.gb.androidcoursenoteapp.ui.new_note.NewNoteFragment;
 import ru.gb.androidcoursenoteapp.ui.note.NoteFragment;
@@ -82,6 +83,16 @@ public class MainActivity extends AppCompatActivity implements Controller {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.activity_main__second_fragment_container, noteFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void showAppStats() {
+        Fragment launchStatsFragment = new LaunchStatsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activity_main__second_fragment_container, launchStatsFragment)
                 .addToBackStack(null)
                 .commit();
     }

@@ -65,6 +65,7 @@ public class NotesListFragment extends Fragment implements OnNoteListener {
         final Menu menu = toolbar.getMenu();
         menuInflater.inflate(R.menu.first_menu, menu);
         menu.findItem(R.id.first_menu__add_new_note).setOnMenuItemClickListener(this::onOptionsItemSelected);
+        menu.findItem(R.id.first_menu__app_stats).setOnMenuItemClickListener(this::onOptionsItemSelected);
 
         initRecycler(view);
 
@@ -77,7 +78,14 @@ public class NotesListFragment extends Fragment implements OnNoteListener {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        controller.showNewNoteFragment();
+        switch (item.getItemId()) {
+            case R.id.first_menu__add_new_note:
+                controller.showNewNoteFragment();
+                break;
+            case R.id.first_menu__app_stats:
+                controller.showAppStats();
+                break;
+        }
         return true;
     }
 
@@ -128,6 +136,7 @@ public class NotesListFragment extends Fragment implements OnNoteListener {
     }
 
     public void refreshList() {
+        noteRepository.getNotes();
         adapter.setData(noteRepository.getNotes());
     }
 }

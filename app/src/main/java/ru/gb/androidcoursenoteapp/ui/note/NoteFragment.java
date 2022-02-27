@@ -72,6 +72,7 @@ public class NoteFragment extends Fragment {
         final Menu menu = toolbar.getMenu();
         menuInflater.inflate(R.menu.second_menu, menu);
         menu.findItem(R.id.second_menu__delete_note).setOnMenuItemClickListener(this::onOptionsItemSelected);
+        menu.findItem(R.id.second_menu__app_stats).setOnMenuItemClickListener(this::onOptionsItemSelected);
 
         titleTextView = view.findViewById(R.id.item_note__note_title_edit_text);
         contentTextView = view.findViewById(R.id.item_note__note_content_edit_text);
@@ -97,7 +98,14 @@ public class NoteFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        controller.onDeleteNote(noteEntity);
+        switch (item.getItemId()) {
+            case R.id.second_menu__delete_note:
+                controller.onDeleteNote(noteEntity);
+                break;
+            case R.id.second_menu__app_stats:
+                controller.showAppStats();
+                break;
+        }
         return true;
     }
 }

@@ -3,11 +3,17 @@ package ru.gb.androidcoursenoteapp.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class NoteEntity implements Parcelable {
+import java.io.Serializable;
+
+public class NoteEntity implements Parcelable, Serializable {
     private int id;
     private String title;
     private String note;
     private String date;
+
+    public NoteEntity() {
+
+    }
 
     public NoteEntity(int id, String title, String note, String date) {
         this.id = id;

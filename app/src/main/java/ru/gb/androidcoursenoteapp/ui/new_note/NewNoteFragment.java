@@ -25,7 +25,6 @@ public class NewNoteFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        super.onAttach(context);
         if (context instanceof Controller) {
             controller = (Controller) context;
         } else {
